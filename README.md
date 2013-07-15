@@ -48,8 +48,24 @@ You can change it into this:
     class UsersController
       def create
         Registrator.call(params[:email], params[:name])
+        # Or
+        Registrator.call(:email => params[:email], :name => params[:name])
       end
     end
+
+You can also specify a different method name like so:
+
+  class Registrator < MethodStruct.new(:email, :name, :method_name => :register)
+    def register
+      # ...
+    end
+  end
+
+  class UsersController
+    def create
+      Registrator.register(params[:email], params[:name])
+    end
+  end
 
 One hopes the benefits will be more obvious for more complex methods
 
