@@ -2,10 +2,19 @@ require "method_struct/version"
 
 module MethodStruct
   def self.new(*fields)
+    if fields.last.is_a?(Hash)
+      method_name = fields.last[:method_name]
+      fields = fields.take(fields.size - 1)
+    else
+      method_name = :call
+    end
+
     Class.new do
-      class << self
-        define_method(:call) do |*field_values|
-          new(*field_values).call
+      singleton_class = (class << self; self; end)
+
+      singleton_class.instance_eval do
+        define_method(method_name) do |*field_values|
+          new(*field_values).send(method_name)
         end
       end
 
