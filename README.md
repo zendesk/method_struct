@@ -29,8 +29,8 @@ Say you have this:
 
 You can change it into this:
 
-    class Registrator < MethodStruct.new(:register, :email, :name)
-      def register
+    class Registrator < MethodStruct.new(:email, :name)
+      def call
         create_user!
         send_email!
       end
@@ -47,7 +47,7 @@ You can change it into this:
 
     class UsersController
       def create
-        Registrator.register(params[:email], params[:name])
+        Registrator.call(params[:email], params[:name])
       end
     end
 
