@@ -1,10 +1,10 @@
 require "method_object/version"
 
 module MethodObject
-  def self.new(action, *fields)
+  def self.new(*fields)
     Class.new do
-      define_singleton_method(action) do |*field_values|
-        new(*field_values).perform
+      define_singleton_method(:call) do |*field_values|
+        new(*field_values).call
       end
 
       define_method(:initialize) do |*values|

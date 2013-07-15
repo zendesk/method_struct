@@ -10,13 +10,13 @@ describe MethodObject do
       verifier = double("verifier")
       verifier.should_receive(:poke).with(argument1, argument2)
 
-      Example = Class.new(MethodObject.new(:perform, :x, :y)) do
-        define_method(:perform) do
+      Example = Class.new(MethodObject.new(:x, :y)) do
+        define_method(:call) do
           verifier.poke(x, y)
         end
       end
 
-      Example.perform(argument1, argument2)
+      Example.call(argument1, argument2)
     end
   end
 end
