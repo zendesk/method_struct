@@ -10,13 +10,28 @@ describe MethodStruct do
       verifier = double("verifier")
       verifier.should_receive(:poke).with(argument1, argument2)
 
-      Example = Class.new(MethodStruct.new(:x, :y)) do
+      exampleClass = Class.new(MethodStruct.new(:x, :y)) do
         define_method(:call) do
           verifier.poke(x, y)
         end
       end
 
-      Example.call(argument1, argument2)
+      exampleClass.call(argument1, argument2)
+    end
+
+    it "creates a hash version of the call method" do
+      argument1 = double("argument1")
+      argument2 = double("argument2")
+      verifier = double("verifier")
+      verifier.should_receive(:poke).with(argument1, argument2)
+
+      exampleClass = Class.new(MethodStruct.new(:x, :y)) do
+        define_method(:call) do
+          verifier.poke(x, y)
+        end
+      end
+
+      exampleClass.call(:x => argument1, :y => argument2)
     end
   end
 end

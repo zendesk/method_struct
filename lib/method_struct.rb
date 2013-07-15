@@ -10,8 +10,14 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
-        fields.zip(values).each do |field, value|
-          instance_variable_set("@#{field}", value)
+        if fields.size > 1 && values.first.is_a?(Hash)
+          fields.each do |field|
+            instance_variable_set("@#{field}", values.first[field])
+          end
+        else
+          fields.zip(values).each do |field, value|
+            instance_variable_set("@#{field}", value)
+          end
         end
       end
 
