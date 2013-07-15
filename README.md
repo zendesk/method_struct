@@ -1,4 +1,4 @@
-# MethodObject
+# MethodStruct
 
 Facilitates extracting large methods into objects - see Usage
 
@@ -6,7 +6,7 @@ Facilitates extracting large methods into objects - see Usage
 
 Add this line to your application's Gemfile:
 
-    gem 'method_object'
+    gem 'method_struct'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install method_object
+    $ gem install method_struct
 
 ## Usage
 
@@ -29,7 +29,7 @@ Say you have this:
 
 You can change it into this:
 
-    class Registrator < MethodObject.new(:register, :email, :name)
+    class Registrator < MethodStruct.new(:register, :email, :name)
       def register
         create_user!
         send_email!

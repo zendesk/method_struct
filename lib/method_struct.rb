@@ -1,6 +1,6 @@
-require "method_object/version"
+require "method_struct/version"
 
-module MethodObject
+module MethodStruct
   def self.new(*fields)
     Class.new do
       define_singleton_method(:call) do |*field_values|

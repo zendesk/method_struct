@@ -1,8 +1,8 @@
 require "rubygems"
 require "bundler/setup"
-require "method_object"
+require "method_struct"
 
-describe MethodObject do
+describe MethodStruct do
   describe ".new" do
     it "creates a class method which calls the declared instance method with the given context" do
       argument1 = double("argument1")
@@ -10,7 +10,7 @@ describe MethodObject do
       verifier = double("verifier")
       verifier.should_receive(:poke).with(argument1, argument2)
 
-      Example = Class.new(MethodObject.new(:x, :y)) do
+      Example = Class.new(MethodStruct.new(:x, :y)) do
         define_method(:call) do
           verifier.poke(x, y)
         end
