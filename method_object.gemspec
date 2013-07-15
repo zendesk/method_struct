@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = MethodObject::VERSION
   spec.authors       = ["Paweł Obrok"]
   spec.email         = ["pawel.obrok@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Facilitates extracting methods into separate objects}
+  spec.summary       = %q{Facilitates extracting methods into separate objects}
   spec.homepage      = ""
   spec.license       = "MIT"
 

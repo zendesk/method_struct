@@ -1,6 +1,6 @@
 # MethodObject
 
-TODO: Write a gem description
+Facilitates extracting large methods into objects - see Usage
 
 ## Installation
 
@@ -18,7 +18,40 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Say you have this:
+
+    class UsersController
+      def create
+        User.create(:email => params[:email], :name => params[:name])
+        Mailer.registration_email(params[:email]).deliver
+      end
+    end
+
+You can change it into this:
+
+    class Registrator < MethodObject.new(:register, :email, :name)
+      def register
+        create_user!
+        send_email!
+      end
+
+      private
+      def create_user!
+        User.create(:email => email, :name => name)
+      end
+
+      def send_email!
+        Mailer.registration_email(:email).deliver
+      end
+    end
+
+    class UsersController
+      def create
+        Registrator.register(params[:email], params[:name])
+      end
+    end
+
+One hopes the benefits will be more obvious for more complex methods
 
 ## Contributing
 
