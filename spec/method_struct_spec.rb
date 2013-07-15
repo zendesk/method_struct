@@ -4,34 +4,26 @@ require "method_struct"
 
 describe MethodStruct do
   describe ".new" do
-    it "creates a class method which calls the declared instance method with the given context" do
-      argument1 = double("argument1")
-      argument2 = double("argument2")
-      verifier = double("verifier")
-      verifier.should_receive(:poke).with(argument1, argument2)
+    let(:argument1) { double("argument1") }
+    let(:argument2) { double("argument2") }
+    let(:verifier) { double("verifier") }
 
-      exampleClass = Class.new(MethodStruct.new(:x, :y)) do
-        define_method(:call) do
+    def create_poker(method_name, verifier)
+      Class.new(MethodStruct.new(:x, :y)) do
+        define_method(method_name) do
           verifier.poke(x, y)
         end
       end
+    end
 
-      exampleClass.call(argument1, argument2)
+    before { verifier.should_receive(:poke).with(argument1, argument2) }
+
+    it "creates a class method which calls the declared instance method with the given context" do
+      create_poker(:call, verifier).call(argument1, argument2)
     end
 
     it "creates a hash version of the call method" do
-      argument1 = double("argument1")
-      argument2 = double("argument2")
-      verifier = double("verifier")
-      verifier.should_receive(:poke).with(argument1, argument2)
-
-      exampleClass = Class.new(MethodStruct.new(:x, :y)) do
-        define_method(:call) do
-          verifier.poke(x, y)
-        end
-      end
-
-      exampleClass.call(:x => argument1, :y => argument2)
+      create_poker(:call, verifier).call(:x => argument1, :y => argument2)
     end
   end
 end
