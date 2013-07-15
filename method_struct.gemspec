@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["pawel.obrok@gmail.com"]
   spec.description   = %q{Facilitates extracting methods into separate objects}
   spec.summary       = %q{Facilitates extracting methods into separate objects}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/basecrm/method_struct"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
