@@ -1,5 +1,7 @@
 # MethodStruct
 
+[![Build Status](https://travis-ci.org/basecrm/method_struct.png?branch=master)](https://travis-ci.org/basecrm/method_struct)
+
 Facilitates extracting large methods into objects - see Usage.
 For a more in-depth treatment of the refactoring see
 http://sourcemaking.com/refactoring/replace-method-with-method-object
