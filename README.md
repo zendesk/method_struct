@@ -55,17 +55,17 @@ You can change it into this:
 
 You can also specify a different method name like so:
 
-  class Registrator < MethodStruct.new(:email, :name, :method_name => :register)
-    def register
-      # ...
+    class Registrator < MethodStruct.new(:email, :name, :method_name => :register)
+      def register
+        # ...
+      end
     end
-  end
 
-  class UsersController
-    def create
-      Registrator.register(params[:email], params[:name])
+    class UsersController
+      def create
+        Registrator.register(params[:email], params[:name])
+      end
     end
-  end
 
 One hopes the benefits will be more obvious for more complex methods
 
