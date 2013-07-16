@@ -1,6 +1,8 @@
 # MethodStruct
 
-Facilitates extracting large methods into objects - see Usage
+Facilitates extracting large methods into objects - see Usage.
+For a more in-depth treatment of the refactoring see
+http://sourcemaking.com/refactoring/replace-method-with-method-object
 
 ## Installation
 
