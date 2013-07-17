@@ -19,7 +19,7 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
-        if fields.size > 1 && values.first.is_a?(Hash)
+        if fields.size > 1 && values.size == 1 && values.first.is_a?(Hash)
           fields.each do |field|
             instance_variable_set("@#{field}", values.first[field])
           end

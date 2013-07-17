@@ -22,6 +22,15 @@ describe MethodStruct do
       create_poker(verifier).call(argument1, argument2)
     end
 
+    describe "when arguments are hashes" do
+      let(:argument1) { { :things => true } }
+      let(:argument2) { { :stuff => true } }
+
+      it "handles them correctly" do
+        create_poker(verifier).call(argument1, argument2)
+      end
+    end
+
     it "creates a hash version of the call method" do
       create_poker(verifier).call(:x => argument1, :y => argument2)
     end
