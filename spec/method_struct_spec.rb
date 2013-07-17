@@ -16,26 +16,21 @@ describe MethodStruct do
       end
     end
 
-    before { verifier.should_receive(:poke).with(argument1, argument2) }
+    before {}
 
     it "creates a class method which calls the declared instance method with the given context" do
+      verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(argument1, argument2)
     end
 
-    describe "when arguments are hashes" do
-      let(:argument1) { { :things => true } }
-      let(:argument2) { { :stuff => true } }
-
-      it "handles them correctly" do
-        create_poker(verifier).call(argument1, argument2)
-      end
-    end
-
     it "creates a hash version of the call method" do
+      verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(:x => argument1, :y => argument2)
     end
 
     it "can change the name of the main method" do
+      verifier.should_receive(:poke).with(argument1, argument2)
+
       the_verifier = verifier
       poker = Class.new(MethodStruct.new(:x, :y, :method_name => :something)) do
         define_method(:something) do
@@ -44,6 +39,29 @@ describe MethodStruct do
       end
 
       poker.something(argument1, argument2)
+    end
+
+    context "when arguments are hashes" do
+      let(:argument1) { { :things => true } }
+      let(:argument2) { { :stuff => true } }
+
+      it "handles them correctly" do
+        verifier.should_receive(:poke).with(argument1, argument2)
+        create_poker(verifier).call(argument1, argument2)
+      end
+
+      it "allows the single argument to be a hash" do
+        verifier.should_receive(:poke).with(argument1)
+
+        the_verifier = verifier
+        poker = Class.new(MethodStruct.new(:x)) do
+          define_method(:call) do
+            the_verifier.poke(x)
+          end
+        end
+
+        poker.call(argument1)
+      end
     end
   end
 end
