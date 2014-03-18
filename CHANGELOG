@@ -1,0 +1,4 @@
+0.1.0
+
+~ #== an #hash are now overloaded in MethodStructs so that two MethodStructs
+  of the same class initialized with the same arguments are equal

@@ -30,7 +30,17 @@ module MethodStruct
         end
       end
 
-      private
+      define_method(:==) do |other|
+        self.class == other.class && fields.all? do |field|
+          send(field) == other.send(field)
+        end
+      end
+
+      define_method(:hash) do
+        fields.map { |field| send(field).hash }.inject(&:^)
+      end
+
+      protected
       fields.each do |field|
         attr_reader(field)
       end

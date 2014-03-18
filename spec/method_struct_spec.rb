@@ -41,6 +41,30 @@ describe MethodStruct do
       poker.something(argument1, argument2)
     end
 
+    describe "equality" do
+      let(:struct) { MethodStruct.new(:a, :b) }
+
+      it "is equal for equal arguments" do
+        expect(struct.new(argument1, argument2) == struct.new(argument1, argument2)).to be_true
+      end
+
+      it "has equal hashes for equal arguments" do
+        expect(struct.new(1, 2).hash).to eq(struct.new(1, 2).hash)
+      end
+
+      it "is unequal for unequal arguments" do
+        expect(struct.new(argument1, argument2) == struct.new(argument2, argument1)).to be_false
+      end
+
+      it "is unequal for different MethodsStruct classes" do
+        expect(MethodStruct.new(:a, :b).new(1, 2)).not_to eq(struct.new(1, 2))
+      end
+
+      it "has unequal hashes for unequal arguments (most of the time)" do
+        expect(struct.new("something", "something else").hash).not_to eq(struct.new("more", "stuff").hash)
+      end
+    end
+
     context "when arguments are hashes" do
       let(:argument1) { { :things => true } }
       let(:argument2) { { :stuff => true } }
