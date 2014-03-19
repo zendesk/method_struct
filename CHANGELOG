@@ -1,3 +1,6 @@
+0.1.1
++ Implement #eql? in terms of #==
+
 0.1.0
 
 ~ #== an #hash are now overloaded in MethodStructs so that two MethodStructs

@@ -48,12 +48,20 @@ describe MethodStruct do
         expect(struct.new(argument1, argument2) == struct.new(argument1, argument2)).to be_true
       end
 
+      it "is eql for equal arguments" do
+        expect(struct.new(argument1, argument2).eql?(struct.new(argument1, argument2))).to be_true
+      end
+
       it "has equal hashes for equal arguments" do
         expect(struct.new(1, 2).hash).to eq(struct.new(1, 2).hash)
       end
 
       it "is unequal for unequal arguments" do
         expect(struct.new(argument1, argument2) == struct.new(argument2, argument1)).to be_false
+      end
+
+      it "is uneql for unequal arguments" do
+        expect(struct.new(argument1, argument2).eql?(struct.new(argument2, argument1))).to be_false
       end
 
       it "is unequal for different MethodsStruct classes" do

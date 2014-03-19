@@ -35,6 +35,7 @@ module MethodStruct
           send(field) == other.send(field)
         end
       end
+      alias_method :eql?, :==
 
       define_method(:hash) do
         fields.map { |field| send(field).hash }.inject(&:^)
