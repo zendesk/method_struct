@@ -16,8 +16,6 @@ describe MethodStruct do
       end
     end
 
-    before {}
-
     it "creates a class method which calls the declared instance method with the given context" do
       verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(argument1, argument2)
@@ -39,6 +37,16 @@ describe MethodStruct do
       end
 
       poker.something(argument1, argument2)
+    end
+
+    it "allows for additional methods defined with a block" do
+      klass = MethodStruct.new(:x) do
+        def something
+          :value
+        end
+      end
+
+      expect(klass.new(:y).something).to eq(:value)
     end
 
     describe "equality" do

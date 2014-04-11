@@ -1,7 +1,7 @@
 require "method_struct/version"
 
 module MethodStruct
-  def self.new(*fields)
+  def self.new(*fields, &block)
     if fields.last.is_a?(Hash)
       method_name = fields.last[:method_name]
       fields = fields.take(fields.size - 1)
@@ -40,6 +40,8 @@ module MethodStruct
       define_method(:hash) do
         fields.map { |field| send(field).hash }.inject(&:^)
       end
+
+      class_eval(&block) if block_given?
 
       protected
       fields.each do |field|
