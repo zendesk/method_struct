@@ -25,58 +25,58 @@ Or install it yourself as:
 Say you have this:
 
 ```ruby
-    class UsersController
-      def create
-        User.create(:email => params[:email], :name => params[:name])
-        Mailer.registration_email(params[:email]).deliver
-      end
-    end
+class UsersController
+  def create
+    User.create(:email => params[:email], :name => params[:name])
+    Mailer.registration_email(params[:email]).deliver
+  end
+end
 ```
 
 You can change it into this:
 
 ```ruby
-    class Registrator < MethodStruct.new(:email, :name)
-      def call
-        create_user!
-        send_email!
-      end
+Registrator = MethodStruct.new(:email, :name) do
+  def call
+    create_user!
+    send_email!
+  end
 
-      private
-      def create_user!
-        User.create(:email => email, :name => name)
-      end
+  private
+  def create_user!
+    User.create(:email => email, :name => name)
+  end
 
-      def send_email!
-        Mailer.registration_email(:email).deliver
-      end
-    end
+  def send_email!
+    Mailer.registration_email(:email).deliver
+  end
+end
 
-    class UsersController
-      def create
-        Registrator.call(params[:email], params[:name])
-        # Or
-        Registrator.call(:email => params[:email], :name => params[:name])
-        # Or - thanks to ruby changing [] into .call
-        Registrator[params[:email], params[:name]]
-      end
-    end
+class UsersController
+  def create
+    Registrator.call(params[:email], params[:name])
+    # Or
+    Registrator.call(:email => params[:email], :name => params[:name])
+    # Or - thanks to ruby changing [] into .call
+    Registrator[params[:email], params[:name]]
+  end
+end
 ```
 
 You can also specify a different method name like so:
 
 ```ruby
-    class Registrator < MethodStruct.new(:email, :name, :method_name => :register)
-      def register
-        # ...
-      end
-    end
+Registrator = MethodStruct.new(:email, :name, :method_name => :register) do
+  def register
+    # ...
+  end
+end
 
-    class UsersController
-      def create
-        Registrator.register(params[:email], params[:name])
-      end
-    end
+class UsersController
+  def create
+    Registrator.register(params[:email], params[:name])
+  end
+end
 ```
 
 One hopes the benefits will be more obvious for more complex methods
