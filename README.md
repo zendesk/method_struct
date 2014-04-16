@@ -57,6 +57,8 @@ You can change it into this:
         Registrator.call(params[:email], params[:name])
         # Or
         Registrator.call(:email => params[:email], :name => params[:name])
+        # Or - thanks to ruby changing [] into .call
+        Registrator[params[:email], params[:name]]
       end
     end
 ```
