@@ -26,6 +26,16 @@ describe MethodStruct do
       create_poker(verifier).call(:x => argument1, :y => argument2)
     end
 
+    it "creates a [] version of the call method" do
+      verifier.should_receive(:poke).with(argument1, argument2)
+      create_poker(verifier)[:x => argument1, :y => argument2]
+    end
+
+    it "creates a [] instance version of the call method" do
+      verifier.should_receive(:poke).with(argument1, argument2)
+      create_poker(verifier).new(:x => argument1, :y => argument2)[]
+    end
+
     it "can change the name of the main method" do
       verifier.should_receive(:poke).with(argument1, argument2)
 

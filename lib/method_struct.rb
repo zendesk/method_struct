@@ -16,6 +16,11 @@ module MethodStruct
         define_method(method_name) do |*field_values|
           new(*field_values).send(method_name)
         end
+        alias_method :[], method_name
+      end
+
+      define_method(:[]) do
+        send(method_name)
       end
 
       define_method(:initialize) do |*values|
