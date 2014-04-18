@@ -1,3 +1,6 @@
+0.1.3
++ Make it possible to call MethodStructs using [] like regular lambdas
+
 0.1.1
 + Implement #eql? in terms of #==
 
