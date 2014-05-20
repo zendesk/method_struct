@@ -49,6 +49,28 @@ describe MethodStruct do
       poker.something(argument1, argument2)
     end
 
+    context "when method includes block" do
+      def create_yielder
+        Class.new(MethodStruct.new(:x, :y)) do
+          define_method(:call) do |&block|
+            block.call(x, y)
+          end
+        end
+      end
+
+      it "yields to block in class method" do
+        expect(create_yielder.call(1, 2){ |x, y| x + y }).to eq(3)
+      end
+
+      it "yields to block in instance method" do
+        expect(create_yielder.new(1, 2).call{ |x, y| x + y }).to eq(3)
+      end
+
+      it "yields to block in instance [] version of the call method" do
+        expect(create_yielder.new(:x => 1, :y => 2).[]{ |x, y| x + y }).to eq(3)
+      end
+    end
+
     it "allows for additional methods defined with a block" do
       klass = MethodStruct.new(:x) do
         def something

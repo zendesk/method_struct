@@ -13,8 +13,8 @@ module MethodStruct
       singleton_class = (class << self; self; end)
 
       singleton_class.instance_eval do
-        define_method(method_name) do |*field_values|
-          new(*field_values).send(method_name)
+        define_method(method_name) do |*field_values, &blk|
+          new(*field_values).send(method_name, &blk)
         end
 
         define_method(:[]) do |*args|
@@ -22,8 +22,8 @@ module MethodStruct
         end
       end
 
-      define_method(:[]) do
-        send(method_name)
+      define_method(:[]) do |&blk|
+        send(method_name, &blk)
       end
 
       define_method(:initialize) do |*values|
