@@ -49,12 +49,12 @@ module MethodStruct
         fields.map { |field| send(field).hash }.inject(&:^)
       end
 
-      class_eval(&block) if block_given?
-
-      protected
       fields.each do |field|
         attr_reader(field)
+        protected field
       end
+
+      class_eval(&block) if block_given?
     end
   end
 end
