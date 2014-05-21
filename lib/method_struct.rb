@@ -1,13 +1,19 @@
 require "method_struct/version"
+require "method_struct/defaults"
+require "method_struct/argument_verifier"
 
 module MethodStruct
   def self.new(*fields, &block)
     if fields.last.is_a?(Hash)
-      method_name = fields.last[:method_name]
+      options = fields.last
       fields = fields.take(fields.size - 1)
     else
-      method_name = :call
+      options = {}
     end
+
+    method_name = options.fetch(:method_name, Defaults.get[:method_name])
+    require_all = options.fetch(:require_all, Defaults.get[:require_all])
+    require_presence = options.fetch(:require_presence, Defaults.get[:require_presence])
 
     Class.new do
       singleton_class = (class << self; self; end)
@@ -27,6 +33,8 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
+        ArgumentVerifier.new(fields, values, require_all, require_presence).verify
+
         if fields.size > 1 && values.size == 1 && values.first.is_a?(Hash)
           fields.each do |field|
             instance_variable_set("@#{field}", values.first[field])

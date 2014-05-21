@@ -81,6 +81,38 @@ describe MethodStruct do
       end
     end
 
+    context "when :require_all => true" do
+      let(:klass) { MethodStruct.new(:x, :y, :require_all => true) }
+
+      it "does not allow creation without all arguments" do
+        expect { klass.new(nil) }.to raise_error(ArgumentError)
+      end
+
+      it "does not allow creation without all hash arguments" do
+        expect { klass.new(:y => nil) }.to raise_error(ArgumentError)
+      end
+
+      it "allows creation with all nil arguments" do
+        expect { klass.new(nil, nil) }.not_to raise_error
+      end
+    end
+
+    context "when :require_presence => true" do
+      let(:klass) { MethodStruct.new(:x, :y, :require_presence => true) }
+
+      it "does not allow creation without all arguments being non-nil" do
+        expect { klass.new(1, nil) }.to raise_error(ArgumentError)
+      end
+
+      it "does not allow creation without all hash arguments being non-nil" do
+        expect { klass.new(:x => 1, :y => nil) }.to raise_error(ArgumentError)
+      end
+
+      it "allows creation with all arguments provided" do
+        expect { klass.new(1, 2) }.not_to raise_error
+      end
+    end
+
     it "allows for additional methods defined with a block" do
       klass = MethodStruct.new(:x) do
         def something
