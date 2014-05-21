@@ -1,6 +1,35 @@
 require "method_struct/version"
+require "singleton"
 
 module MethodStruct
+  class Defaults
+    include Singleton
+
+    def self.set(options)
+      instance.set(options)
+    end
+
+    def self.get
+      instance.get
+    end
+
+    def initialize
+      @defaults = {
+        :method_name => :call,
+        :allow_nil => true,
+        :allow_missing => true
+      }
+    end
+
+    def set(options)
+      @defaults = @defaults.merge(options)
+    end
+
+    def get
+      @defaults
+    end
+  end
+
   class ArgumentVerifier
     def initialize(fields, values, allow_missing, allow_nil)
       @fields, @values = fields, values
@@ -50,9 +79,9 @@ module MethodStruct
       options = {}
     end
 
-    method_name = options.fetch(:method_name, :call)
-    allow_missing = options.fetch(:allow_missing, true)
-    allow_nil = options.fetch(:allow_nil, true)
+    method_name = options.fetch(:method_name, Defaults.get[:method_name])
+    allow_missing = options.fetch(:allow_missing, Defaults.get[:allow_missing])
+    allow_nil = options.fetch(:allow_nil, Defaults.get[:allow_nil])
 
     Class.new do
       singleton_class = (class << self; self; end)
