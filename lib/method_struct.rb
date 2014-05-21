@@ -2,8 +2,9 @@ require "method_struct/version"
 
 module MethodStruct
   class ArgumentVerifier
-    def initialize(fields, values, allow_missing)
-      @fields, @values, @allow_missing = fields, values, allow_missing
+    def initialize(fields, values, allow_missing, allow_nil)
+      @fields, @values = fields, values
+      @allow_missing, @allow_nil = allow_missing, allow_nil
     end
 
     def verify
@@ -15,7 +16,7 @@ module MethodStruct
     end
 
     private
-    attr_reader :fields, :values, :allow_missing
+    attr_reader :fields, :values, :allow_missing, :allow_nil
 
     def verify_hash
       expected = fields.map(&:to_s).sort
@@ -24,11 +25,19 @@ module MethodStruct
       if !allow_missing && !(expected - provided).empty?
         raise ArgumentError.new("wrong arguments provided")
       end
+
+      if !allow_nil && !expected.all? { |arg| values.first[arg] || values.first[arg.to_s] }
+        raise ArgumentError.new("nil arguments provided")
+      end
     end
 
     def verify_normal
       if !allow_missing && fields.count != values.count
         raise ArgumentError.new("wrong number of arguments (#{values.count} for #{fields.count})")
+      end
+
+      if !allow_nil && fields.count != values.compact.count
+        raise ArgumentError.new("nil arguments provided")
       end
     end
   end
@@ -43,6 +52,7 @@ module MethodStruct
 
     method_name = options.fetch(:method_name, :call)
     allow_missing = options.fetch(:allow_missing, true)
+    allow_nil = options.fetch(:allow_nil, true)
 
     Class.new do
       singleton_class = (class << self; self; end)
@@ -62,7 +72,8 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
-        ArgumentVerifier.new(fields, values, allow_missing).verify
+        ArgumentVerifier.new(fields, values, allow_missing, allow_nil).verify
+
         if fields.size > 1 && values.size == 1 && values.first.is_a?(Hash)
           fields.each do |field|
             instance_variable_set("@#{field}", values.first[field])
