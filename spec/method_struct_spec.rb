@@ -16,6 +16,16 @@ describe MethodStruct do
       end
     end
 
+    WithDefault = MethodStruct.new(:x, :y) do
+      def call
+        [x, y]
+      end
+
+      def x
+        @x ||= 'default'
+      end
+    end
+
     it "creates a class method which calls the declared instance method with the given context" do
       verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(argument1, argument2)
@@ -134,6 +144,11 @@ describe MethodStruct do
 
         poker.call(argument1)
       end
+    end
+
+    it 'allows overriding default attr_readers' do
+      WithDefault.call(:x => argument1, :y => argument2).should eq([argument1, argument2])
+      WithDefault.call(:y => argument2).should eq(['default', argument2])
     end
   end
 end
