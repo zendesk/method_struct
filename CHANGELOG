@@ -1,3 +1,11 @@
+0.2.0
++ Allow user functions to overwrite the generated attr readers
++ Require_all option that checks if all arguments have been provided on
+  initialization
++ Require_presence option that checks if all arguments are non-nil on
+  initialization
++ Configurable defaults for the options
+
 0.1.5
 + Support blocks
 

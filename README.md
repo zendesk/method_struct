@@ -79,7 +79,16 @@ class UsersController
 end
 ```
 
-One hopes the benefits will be more obvious for more complex methods
+You can use `:require_all => true` if you want to verify that all arguments
+have been specified or `:require_presence => true` to verify that all arguments
+are non-nil. Global defaults for these options can be changed like so:
+
+```ruby
+MethodStruct::Defaults.set(
+  :require_presence => true,
+  :method_name => :do_it
+)
+```
 
 ## Contributing
 
