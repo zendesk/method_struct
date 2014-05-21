@@ -71,8 +71,8 @@ describe MethodStruct do
       end
     end
 
-    context "when :allow_missing => false" do
-      let(:klass) { MethodStruct.new(:x, :y, :allow_missing => false) }
+    context "when :require_all => true" do
+      let(:klass) { MethodStruct.new(:x, :y, :require_all => true) }
 
       it "does not allow creation without all arguments" do
         expect { klass.new(nil) }.to raise_error(ArgumentError)
@@ -87,8 +87,8 @@ describe MethodStruct do
       end
     end
 
-    context "when :allow_nil => false" do
-      let(:klass) { MethodStruct.new(:x, :y, :allow_nil => false) }
+    context "when :require_presence => true" do
+      let(:klass) { MethodStruct.new(:x, :y, :require_presence => true) }
 
       it "does not allow creation without all arguments being non-nil" do
         expect { klass.new(1, nil) }.to raise_error(ArgumentError)

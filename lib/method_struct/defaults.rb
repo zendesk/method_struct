@@ -15,8 +15,8 @@ module MethodStruct
     def initialize
       @defaults = {
         :method_name => :call,
-        :allow_nil => true,
-        :allow_missing => true
+        :require_all => false,
+        :require_presence => false,
       }
     end
 

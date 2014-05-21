@@ -12,8 +12,8 @@ module MethodStruct
     end
 
     method_name = options.fetch(:method_name, Defaults.get[:method_name])
-    allow_missing = options.fetch(:allow_missing, Defaults.get[:allow_missing])
-    allow_nil = options.fetch(:allow_nil, Defaults.get[:allow_nil])
+    require_all = options.fetch(:require_all, Defaults.get[:require_all])
+    require_presence = options.fetch(:require_presence, Defaults.get[:require_presence])
 
     Class.new do
       singleton_class = (class << self; self; end)
@@ -33,7 +33,7 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
-        ArgumentVerifier.new(fields, values, allow_missing, allow_nil).verify
+        ArgumentVerifier.new(fields, values, require_all, require_presence).verify
 
         if fields.size > 1 && values.size == 1 && values.first.is_a?(Hash)
           fields.each do |field|

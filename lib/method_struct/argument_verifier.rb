@@ -1,8 +1,8 @@
 module MethodStruct
   class ArgumentVerifier
-    def initialize(fields, values, allow_missing, allow_nil)
+    def initialize(fields, values, require_all, require_presence)
       @fields, @values = fields, values
-      @allow_missing, @allow_nil = allow_missing, allow_nil
+      @require_all, @require_presence = require_all, require_presence
     end
 
     def verify
@@ -14,27 +14,27 @@ module MethodStruct
     end
 
     private
-    attr_reader :fields, :values, :allow_missing, :allow_nil
+    attr_reader :fields, :values, :require_all, :require_presence
 
     def verify_hash
       expected = fields.map(&:to_s).sort
       provided = values.first.keys.map(&:to_s).sort
 
-      if !allow_missing && !(expected - provided).empty?
+      if require_all && !(expected - provided).empty?
         raise ArgumentError.new("wrong arguments provided")
       end
 
-      if !allow_nil && !expected.all? { |arg| values.first[arg] || values.first[arg.to_s] }
+      if require_presence && !expected.all? { |arg| values.first[arg] || values.first[arg.to_s] }
         raise ArgumentError.new("nil arguments provided")
       end
     end
 
     def verify_normal
-      if !allow_missing && fields.count != values.count
+      if require_all && fields.count != values.count
         raise ArgumentError.new("wrong number of arguments (#{values.count} for #{fields.count})")
       end
 
-      if !allow_nil && fields.count != values.compact.count
+      if require_presence && fields.count != values.compact.count
         raise ArgumentError.new("nil arguments provided")
       end
     end
