@@ -26,6 +26,11 @@ describe MethodStruct do
       end
     end
 
+    it 'does not allow definition with strings' do
+      expect{ MethodStruct.new('x', 'y') }.to raise_error(
+        ArgumentError, 'only symbol fields allowed: ["x", "y"]')
+    end
+
     it "creates a class method which calls the declared instance method with the given context" do
       verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(argument1, argument2)
@@ -85,11 +90,15 @@ describe MethodStruct do
       let(:klass) { MethodStruct.new(:x, :y, :require_all => true) }
 
       it "does not allow creation without all arguments" do
-        expect { klass.new(nil) }.to raise_error(ArgumentError)
+        expect { klass.new(nil) }.to raise_error(ArgumentError, 'missing arguments: [:y]')
       end
 
       it "does not allow creation without all hash arguments" do
-        expect { klass.new(:y => nil) }.to raise_error(ArgumentError)
+        expect { klass.new(:y => nil) }.to raise_error(ArgumentError, 'missing arguments: [:x]')
+      end
+
+      it "allows creation with all nil hash arguments" do
+        expect { klass.new(:x => nil, :y => nil) }.not_to raise_error
       end
 
       it "allows creation with all nil arguments" do
@@ -101,11 +110,23 @@ describe MethodStruct do
       let(:klass) { MethodStruct.new(:x, :y, :require_presence => true) }
 
       it "does not allow creation without all arguments being non-nil" do
-        expect { klass.new(1, nil) }.to raise_error(ArgumentError)
+        expect { klass.new(1, nil) }.to raise_error(ArgumentError, 'nil arguments: [:y]')
       end
 
       it "does not allow creation without all hash arguments being non-nil" do
-        expect { klass.new(:x => 1, :y => nil) }.to raise_error(ArgumentError)
+        expect { klass.new(:x => 1, :y => nil) }.to raise_error(ArgumentError, 'nil arguments: [:y]')
+      end
+
+      it "allows creation with boolean hash arguments provided" do
+        expect { klass.new(:x => false, :y => false) }.not_to raise_error
+      end
+
+      it "allows creation with boolean hash arguments provided" do
+        expect { klass.new(false, false) }.not_to raise_error
+      end
+
+      it "allows creation with all hash symbol arguments provided" do
+        expect { klass.new(:x => 1, :y => 2) }.not_to raise_error
       end
 
       it "allows creation with all arguments provided" do
@@ -142,7 +163,7 @@ describe MethodStruct do
         expect(struct.new(argument1, argument2) == struct.new(argument2, argument1)).to be_false
       end
 
-      it "is uneql for unequal arguments" do
+      it "is unequal for unequal arguments" do
         expect(struct.new(argument1, argument2).eql?(struct.new(argument2, argument1))).to be_false
       end
 
