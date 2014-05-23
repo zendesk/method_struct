@@ -1,6 +1,7 @@
 require "method_struct/version"
 require "method_struct/defaults"
 require "method_struct/argument_verifier"
+require "method_struct/argument_parser"
 
 module MethodStruct
   def self.new(*fields, &block)
@@ -33,16 +34,15 @@ module MethodStruct
       end
 
       define_method(:initialize) do |*values|
-        ArgumentVerifier.new(fields, values, require_all, require_presence).verify
+        arguments = ArgumentParser.new(
+          fields: fields,
+          raw_arguments: values,
+          require_all: require_all,
+          require_presence: require_presence
+        ).call
 
-        if fields.size > 1 && values.size == 1 && values.first.is_a?(Hash)
-          fields.each do |field|
-            instance_variable_set("@#{field}", values.first[field])
-          end
-        else
-          fields.zip(values).each do |field, value|
-            instance_variable_set("@#{field}", value)
-          end
+        arguments.each do |field, value|
+          instance_variable_set("@#{field}", value)
         end
       end
 
