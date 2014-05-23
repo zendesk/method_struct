@@ -12,6 +12,10 @@ module MethodStruct
       options = {}
     end
 
+    unless fields.all?{ |f| f.is_a?(Symbol) }
+      raise ArgumentError, "only symbol fields allowed: #{fields.select{ |f| !f.is_a?(Symbol) }}"
+    end
+
     method_name = options.fetch(:method_name, Defaults.get[:method_name])
     require_all = options.fetch(:require_all, Defaults.get[:require_all])
     require_presence = options.fetch(:require_presence, Defaults.get[:require_presence])

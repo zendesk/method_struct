@@ -26,6 +26,11 @@ describe MethodStruct do
       end
     end
 
+    it 'does not allow definition with strings' do
+      expect{ MethodStruct.new('x', 'y') }.to raise_error(
+        ArgumentError, 'only symbol fields allowed: ["x", "y"]')
+    end
+
     it "creates a class method which calls the declared instance method with the given context" do
       verifier.should_receive(:poke).with(argument1, argument2)
       create_poker(verifier).call(argument1, argument2)
