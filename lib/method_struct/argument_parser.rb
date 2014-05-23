@@ -6,7 +6,7 @@ module MethodStruct
 
     def call
       parsed_arguments.tap do |args|
-        ArgumentVerifier.new(options.merge(arguments: args)).call
+        ArgumentVerifier.new(options.merge(:arguments => args)).call
       end
     end
 

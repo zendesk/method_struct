@@ -13,7 +13,8 @@ module MethodStruct
     end
 
     unless fields.all?{ |f| f.is_a?(Symbol) }
-      raise ArgumentError, "only symbol fields allowed: #{fields.select{ |f| !f.is_a?(Symbol) }}"
+      invalid_fields = fields.select{ |f| !f.is_a?(Symbol) }
+      raise ArgumentError, "only symbol fields allowed: #{invalid_fields.inspect}"
     end
 
     method_name = options.fetch(:method_name, Defaults.get[:method_name])
@@ -39,10 +40,10 @@ module MethodStruct
 
       define_method(:initialize) do |*values|
         arguments = ArgumentParser.new(
-          fields: fields,
-          raw_arguments: values,
-          require_all: require_all,
-          require_presence: require_presence
+          :fields => fields,
+          :raw_arguments => values,
+          :require_all => require_all,
+          :require_presence => require_presence
         ).call
 
         arguments.each do |field, value|
