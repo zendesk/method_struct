@@ -1,3 +1,6 @@
+0.2.1
+~ Fixes in how argument verification deals with hashes
+
 0.2.0
 + Allow user functions to overwrite the generated attr readers
 + Require_all option that checks if all arguments have been provided on
