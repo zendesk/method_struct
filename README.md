@@ -36,7 +36,7 @@ end
 You can change it into this:
 
 ```ruby
-Registrator = MethodStruct.new(:email, :name) do
+class Registrator < MethodStruct.new(:email, :name)
   def call
     create_user!
     send_email!
@@ -66,7 +66,7 @@ end
 You can also specify a different method name like so:
 
 ```ruby
-Registrator = MethodStruct.new(:email, :name, :method_name => :register) do
+class Registrator < MethodStruct.new(:email, :name, :method_name => :register)
   def register
     # ...
   end
@@ -88,6 +88,19 @@ MethodStruct::Defaults.set(
   :require_presence => true,
   :method_name => :do_it
 )
+```
+
+Method struct currently also supports a `do` syntax, but it is discouraged (and may get depracated)
+due to odd constant scoping. Example:
+
+```ruby
+Registrator = MethodStruct.new(:email, :name) do
+  REGISTRATION_PATH = "/register" # this is now a top-level constant
+
+  def call
+    ...
+  end
+end
 ```
 
 ## Contributing
