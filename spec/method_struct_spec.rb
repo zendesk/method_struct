@@ -176,6 +176,18 @@ describe MethodStruct do
       end
     end
 
+    describe "#to_proc" do
+      it "is possible to pass one as a block argument" do
+        struct = MethodStruct.new(:x) do
+          def call
+            x.odd?
+          end
+        end
+
+        expect([1, 2, 3].select(&struct)).to eq([1,3])
+      end
+    end
+
     context "when arguments are hashes" do
       let(:argument1) { { :things => true } }
       let(:argument2) { { :stuff => true } }

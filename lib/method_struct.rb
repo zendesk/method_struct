@@ -32,6 +32,10 @@ module MethodStruct
         define_method(:[]) do |*args|
           send(method_name, *args)
         end
+
+        define_method(:to_proc) do
+          Proc.new { |*args| send(method_name, *args) }
+        end
       end
 
       define_method(:[]) do |&blk|
