@@ -4,7 +4,7 @@
 
 Facilitates extracting large methods into objects - see Usage.
 For a more in-depth treatment of the refactoring see
-http://sourcemaking.com/refactoring/replace-method-with-method-object
+http://sourcemaking.com/refactoring/replace-method-with-method-object. You can also take a look at http://www.bunsch.pl/2014/10/14/wrangling-service-objects-with-method_struct/ for an exmaple of usage in a Rails app.
 
 ## Installation
 
