@@ -110,3 +110,9 @@ end
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Copyright and license
+
+Copyright 2020 Zendesk
+
+Licensed under the [Apache License, Version 2.0](LICENSE)
