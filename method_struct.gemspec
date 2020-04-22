@@ -6,12 +6,12 @@ require 'method_struct/version'
 Gem::Specification.new do |spec|
   spec.name          = "method_struct"
   spec.version       = MethodStruct::VERSION
-  spec.authors       = ["Paweł Obrok"]
-  spec.email         = ["pawel.obrok@gmail.com"]
+  spec.authors       = ["Zendesk"]
+  spec.email         = ["opensource@zendesk.com"]
   spec.description   = %q{Facilitates extracting methods into separate objects}
   spec.summary       = %q{Facilitates extracting methods into separate objects}
   spec.homepage      = "https://github.com/basecrm/method_struct"
-  spec.license       = "MIT"
+  spec.license       = "Apache License Version 2.0"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
