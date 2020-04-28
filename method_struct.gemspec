@@ -6,7 +6,7 @@ require 'method_struct/version'
 Gem::Specification.new do |spec|
   spec.name          = "method_struct"
   spec.version       = MethodStruct::VERSION
-  spec.authors       = ["Zendesk"]
+  spec.authors       = ["Zendesk", "Paweł Obrok"]
   spec.email         = ["opensource@zendesk.com"]
   spec.description   = %q{Facilitates extracting methods into separate objects}
   spec.summary       = %q{Facilitates extracting methods into separate objects}
