@@ -1,3 +1,7 @@
+0.3.0
+~ Update minimum ruby version to 2.3.8
+~ Updated license to Apache License 2.0
+
 0.2.2
 ~ A MethodStruct class now implements #to_proc and so can be passed as a block
 	argument
