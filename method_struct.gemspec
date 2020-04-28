@@ -11,14 +11,20 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Facilitates extracting methods into separate objects}
   spec.summary       = %q{Facilitates extracting methods into separate objects}
   spec.homepage      = "https://github.com/basecrm/method_struct"
-  spec.license       = "Apache License Version 2.0"
+  spec.license       = "Apache-2.0"
+
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
+  if RUBY_PLATFORM =~ /java/
+    spec.required_ruby_version = ">= 1.7.27"
+  else 
+    spec.required_ruby_version = ">= 2.3.8"
+  end
+  
+  spec.add_development_dependency "rake", ">= 10.0"
   spec.add_development_dependency "rspec", "~> 2.14.1"
 end
