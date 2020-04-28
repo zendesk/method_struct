@@ -113,6 +113,6 @@ end
 
 ## Copyright and license
 
-Copyright 2020 Zendesk
+Copyright 2020 Zendesk, Paweł Obrok
 
 Licensed under the [Apache License, Version 2.0](LICENSE)
