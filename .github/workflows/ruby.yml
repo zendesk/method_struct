@@ -40,8 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Install dependencies
+      uses: docker://jruby:1.7.27
+      with:
+        args: bundle install
     - name: Run tests
       uses: docker://jruby:1.7.27
       with:
-        args: /bin/bash -c 'bundle install && bundle exec rspec'
-      
+        args: bundle exec rspec
