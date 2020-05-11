@@ -22,18 +22,26 @@ jobs:
         - 2.7.0
         - 2.5.8
         - 2.3.8
-        - jruby-1.7.27
+        - jruby-9.2.11.1
 
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
     - name: Install dependencies
       run: bundle install
     - name: Run tests
       run: bundle exec rspec
+
+  test-jruby:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Run tests
+      uses: docker://jruby:1.7.27
+      run: |
+        bundle install
+        bundle exec rspec
+      
