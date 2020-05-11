@@ -41,7 +41,6 @@ jobs:
     steps:
     - name: Run tests
       uses: docker://jruby:1.7.27
-      run: |
-        bundle install
-        bundle exec rspec
+      with:
+        args: "/bin/bash -c 'bundle install && bundle exec rspec'"
       
