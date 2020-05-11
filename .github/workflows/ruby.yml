@@ -36,12 +36,13 @@ jobs:
       run: bundle exec rspec
 
   test-jruby:
+    name: test (jruby-1.7.27)
     runs-on: ubuntu-latest
     
     steps:
     - name: Run tests
       uses: docker://jruby:1.7.27
       with:
-        entrypoint: /bin/bash -c
-        args: bundle install && bundle exec rspec
+        entrypoint: /bin/bash
+        args: "-c 'bundle install && bundle exec rspec'"
       
