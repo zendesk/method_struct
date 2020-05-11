@@ -1,6 +1,6 @@
 # MethodStruct
 
-[![Build Status](https://travis-ci.org/basecrm/method_struct.png?branch=master)](https://travis-ci.org/basecrm/method_struct)
+[![Tests](https://github.com/zendesk/method_struct/workflows/Tests/badge.svg)](https://github.com/zendesk/method_struct/actions?query=workflow%3ATests+branch%3Amaster)
 
 Facilitates extracting large methods into objects - see Usage.
 For a more in-depth treatment of the refactoring see
