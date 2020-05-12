@@ -111,6 +111,12 @@ end
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## Releasing new version of gem
+
+1. Update version [lib/method_struct/version.rb](lib/method_struct/version.rb) and push to `master`
+2. Create new GitHub release with tag name starting with `v` and the version, for example `v0.3.0`
+3. Gem will be automatically built and pushed to rubygems.org with GitHub Action
+
 ## Copyright and license
 
 Copyright 2013 Zendesk
