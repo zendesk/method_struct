@@ -27,14 +27,3 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rspec
-
-  test-jruby:
-    name: test (jruby-1.7.27)
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: zendesk/checkout@v3
-    - name: Install dependencies
-      uses: docker://jruby:1.7.27
-      with:
-        args: /bin/sh -c "bundle install && bundle exec rspec"
