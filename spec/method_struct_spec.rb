@@ -148,11 +148,11 @@ describe MethodStruct do
       let(:struct) { MethodStruct.new(:a, :b) }
 
       it "is equal for equal arguments" do
-        expect(struct.new(argument1, argument2) == struct.new(argument1, argument2)).to be_true
+        expect(struct.new(argument1, argument2) == struct.new(argument1, argument2)).to be true
       end
 
       it "is eql for equal arguments" do
-        expect(struct.new(argument1, argument2).eql?(struct.new(argument1, argument2))).to be_true
+        expect(struct.new(argument1, argument2).eql?(struct.new(argument1, argument2))).to be true
       end
 
       it "has equal hashes for equal arguments" do
@@ -160,11 +160,11 @@ describe MethodStruct do
       end
 
       it "is unequal for unequal arguments" do
-        expect(struct.new(argument1, argument2) == struct.new(argument2, argument1)).to be_false
+        expect(struct.new(argument1, argument2) == struct.new(argument2, argument1)).to be false
       end
 
       it "is unequal for unequal arguments" do
-        expect(struct.new(argument1, argument2).eql?(struct.new(argument2, argument1))).to be_false
+        expect(struct.new(argument1, argument2).eql?(struct.new(argument2, argument1))).to be false
       end
 
       it "is unequal for different MethodsStruct classes" do
